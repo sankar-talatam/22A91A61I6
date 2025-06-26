@@ -1,7 +1,7 @@
 const Url = require('../models/Url');
 const generateShortCode = require('../utils/generateShortCode');
 
-// Create a shortened URL
+//shortened URL
 exports.createShortUrl = async (req, res) => {
   try {
     let { url, validity, shortcode } = req.body;
@@ -10,7 +10,6 @@ exports.createShortUrl = async (req, res) => {
     if (!url) return res.status(400).json({ error: 'Original URL is required' });
     if (!validity) validity = 30; // default 30 minutes
 
-    // Generate shortcode if not provided
     if (!shortcode) {
       shortcode = generateShortCode();
     }
@@ -21,7 +20,7 @@ exports.createShortUrl = async (req, res) => {
       return res.status(400).json({ error: 'Shortcode already exists. Try another or leave it empty.' });
     }
 
-    // Create new URL document
+
     const newUrl = await Url.create({
       url,
       shortcode,
@@ -41,7 +40,6 @@ exports.createShortUrl = async (req, res) => {
   }
 };
 
-// Fetch stats for a given shortcode
 exports.getStats = async (req, res) => {
   try {
     const { shortcode } = req.params;
